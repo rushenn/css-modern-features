@@ -2,52 +2,20 @@
 
 An agent skill that enforces modern CSS practices based on your project's browser targets. Covers 57+ CSS features across color, layout, selectors, animation, typography, positioning, and component patterns. Works with Claude Code, Cursor, Windsurf, Codex, Cline, GitHub Copilot, and other AI coding agents.
 
-## Install all skills
+## Installation
 
 ```bash
 npx skills add rushenn/css-modern-features
 ```
 
-## Install a specific skill
+## How the skill works
 
-```bash
-npx skills add rushenn/css-modern-features@css-modern-features
-```
+It operates in three stages:
 
----
+### 1. Browser target detection
+Before writing any CSS, the skill reads your project's browser configuration - package.json browserslist, .browserslistrc, or framework-specific config files (Vite, Next.js, Astro). This is the foundation. Every feature recommendation is scoped to what your users' browsers actually support.
 
-## Skills
-
-| Skill | Description |
-|-------|-------------|
-| [`css-modern-features`](#css-modern-features) | Use modern CSS features based on your project's browser targets |
-
----
-
-## `css-modern-features`
-
-> Use modern CSS features wherever browser support allows — `clamp()`, `:has()`, container queries, OKLCH colors, scroll-driven animations, anchor positioning, `@starting-style`, `light-dark()`, `text-wrap: balance`, and 50+ more.
-
-The skill reads your `browserslist` config and maps it to a **feature tier**, then runs a checklist of ~57 modern CSS features before finalizing any CSS output. It covers plain CSS, CSS Modules, styled-components, Tailwind arbitrary values, and inline styles in React/Vue/Svelte.
-
-### What it prevents
-
-| Legacy pattern | Modern replacement |
-|---|---|
-| `100vh` on mobile | `100dvh` / `100svh` |
-| Breakpoint-stepped font sizes | `clamp(1.5rem, 4vw, 3rem)` |
-| JS scroll listeners for animation | Scroll-driven animations |
-| Two `@media prefers-color-scheme` blocks | `light-dark()` |
-| JS `getBoundingClientRect` for tooltips | Anchor positioning |
-| `::-webkit-scrollbar` hacks | `scrollbar-color` / `scrollbar-width` |
-| `display:none` that can't animate | `@starting-style` + `transition-behavior: allow-discrete` |
-| `height: auto` can't transition | `interpolate-size: allow-keywords` |
-| Padding-top ratio hack | `aspect-ratio` |
-| JS class toggling for parent styles | `:has()` selector |
-| BEM / data attributes for scoping | `@scope` |
-| Specificity hacks | `@layer` |
-
-### Browser tier system
+### 2. Tier mapping
 
 The skill detects your `browserslist` config (from `package.json`, `.browserslistrc`, or framework config) and maps it to a tier:
 
@@ -59,7 +27,11 @@ The skill detects your `browserslist` config (from `package.json`, `.browserslis
 | **Tier 3** | > 1% / Safari 15- | Selective + `@supports` guards |
 | **Tier 4** | IE 11 / legacy Android | Fundamentals only |
 
-### Example output
+### 3. Feature checklist
+
+Before finalizing any CSS output, the agent runs a 57-item checklist across eight categories: color and theming, layout and sizing, selectors and logic, animation, typography, positioning, visual effects, and component patterns. Features are applied based on the project's tier. Tier 3 targets get @supports guards and fallbacks automatically.
+
+## Example output
 
 **Input prompt**: *"Make a responsive card component with dark mode"*
 
@@ -90,29 +62,22 @@ With `css-modern-features` skill (Tier 2 target):
 }
 ```
 
-### Features covered
+## Features covered
 
-**Color & Theming** — OKLCH, `color-mix()`, relative color syntax, `light-dark()`, `accent-color`
+| Category | Features |
+|----------|----------|
+| Color & Theming | OKLCH, color-mix(), relative color syntax, light-dark(), accent-color |
+| Layout & Sizing | clamp(), min(), max(), round(), dynamic viewport units (dvh/svh/lvh), container queries, subgrid, field-sizing: content, margin-trim |
+| Selectors & Logic | :has(), :is(), :where(), @layer, @scope, CSS nesting |
+| Animation | Scroll-driven animations, @starting-style, transition-behavior: allow-discrete, view transitions, offset-path, interpolate-size |
+| Typography | text-wrap: balance/pretty, cap/lh units, ::marker, counter(), font-size-adjust |
+| Positioning | Anchor positioning, logical properties, inset, scroll-margin/padding |
+| Visual Effects | backdrop-filter, mix-blend-mode, clip-path, gradient borders, border-image |
+| Component Patterns | env(safe-area-inset-*), scrollbar-color/width, overscroll-behavior, media features (hover: hover), (pointer: coarse), (scripting: none) |
+| Experimental (watch list) | interpolate-size, masonry, if(), @function, reading-flow |
+| Houdini | Paint Worklet, CSS.registerProperty() |
 
-**Layout & Sizing** — `clamp()`, `min()`, `max()`, `round()`, dynamic viewport units (`dvh/svh/lvh`), container queries, subgrid, `field-sizing: content`, `margin-trim`
-
-**Selectors & Logic** — `:has()`, `:is()`, `:where()`, `@layer`, `@scope`, CSS nesting
-
-**Animation** — Scroll-driven animations, `@starting-style`, `transition-behavior: allow-discrete`, view transitions, `offset-path`, `interpolate-size`
-
-**Typography** — `text-wrap: balance/pretty`, `cap`/`lh` units, `::marker`, `counter()`, `font-size-adjust`
-
-**Positioning** — Anchor positioning, logical properties, `inset`, `scroll-margin/padding`
-
-**Visual Effects** — `backdrop-filter`, `mix-blend-mode`, `clip-path`, gradient borders, `border-image`
-
-**Component Patterns** — `env(safe-area-inset-*)`, `scrollbar-color/width`, `overscroll-behavior`, media features `(hover: hover)`, `(pointer: coarse)`, `(scripting: none)`
-
-**Experimental (watch list)** — `interpolate-size`, `masonry`, `if()`, `@function`, `reading-flow`
-
-**Houdini** — Paint Worklet, `CSS.registerProperty()`
-
-### Tailwind support
+## Tailwind support
 
 Modern CSS features map directly to Tailwind arbitrary values:
 
