@@ -1,0 +1,12 @@
+{
+  "name": "rushenn/css-modern-features",
+  "description": "Agent skills for AI coding tools — modern CSS and more",
+  "skills": [
+    {
+      "name": "css-modern-features",
+      "path": "css-modern-features",
+      "description": "Use modern CSS features based on your project's browser targets. Covers clamp(), :has(), container queries, OKLCH, scroll-driven animations, anchor positioning, light-dark(), and 50+ more features with a tier-based browserslist detection system.",
+      "agents": ["claude-code", "cursor", "windsurf", "codex", "cline", "roo", "copilot"]
+    }
+  ]
+}
