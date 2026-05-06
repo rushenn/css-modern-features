@@ -1,6 +1,6 @@
 # rushenn/css-modern-features
 
-A collection of agent skills for Claude Code, Cursor, Windsurf, Codex, and other AI coding agents.
+An agent skill that enforces modern CSS practices based on your project's browser targets. Covers 57+ CSS features across color, layout, selectors, animation, typography, positioning, and component patterns. Works with Claude Code, Cursor, Windsurf, Codex, Cline, GitHub Copilot, and other AI coding agents.
 
 ## Install all skills
 
@@ -87,14 +87,6 @@ With `css-modern-features` skill (Tier 2 target):
   width: min(100%, 400px);
   background: light-dark(oklch(0.98 0 0), oklch(0.15 0 0));
   padding: clamp(1rem, 3cqw, 1.5rem);
-  container-type: inline-size;
-  border-radius: 0.75rem;
-  text-wrap: balance; /* headings inside */
-}
-
-/* Component-level, not viewport-level */
-@container (min-width: 500px) {
-  .card { display: grid; grid-template-columns: 1fr 2fr; }
 }
 ```
 
